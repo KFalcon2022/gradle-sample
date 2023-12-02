@@ -1,0 +1,39 @@
+// Аналог pom.xml (исключая информацию о модулях проекта - она в settings.gradle).
+// Содержит информацию о конфигурации конкретного модуля
+
+// Подключение плагинов. Можно провести параллель с тегом <plugins>,
+// но конкретно этот блок нужен для декларативного подключения плагинов, их конфигурация описана отдельно
+plugins {
+//    Плагины в Gradle загружаются по id. Также может быть указана версия плагина при необходимости
+
+//    java - стандартный плагин для работы с Java. Позволяет компилировать java-файлы, упаковывать в jar и многое другое
+    id 'java'
+//    Плагин для запуска проекта. Можно провести параллель с плагином org.codehaus.mojo:exec-maven-plugin.
+    id 'application'
+}
+
+// Описание текущего артефакта. artifactId указан как name (в нашем случае - rootProject.name)
+// в settings.gradle: gradle-sample
+group 'com.walking'
+version '1.0-SNAPSHOT'
+
+// Указываем используемые репозитории. В Maven его центральный репозиторий используется по умолчанию,
+// в Gradle же его тоже нужно указать явно
+repositories {
+    mavenCentral()
+}
+
+// Блок подключения зависимостей. Схож с <dependencies> в Maven
+dependencies {
+//    Подключения конкретной зависимости: implementation - стандартная конфигурация,
+//    аналогичная <scope>compile</scope> в Maven.
+//    'org.apache.logging.log4j:log4j-api:2.20.0' - краткое указание информации о подключаемом артефакте
+//    в формате 'groupId:artifactId:version'
+    implementation 'org.apache.logging.log4j:log4j-api:2.20.0'
+    implementation 'org.apache.logging.log4j:log4j-core:2.20.0'
+}
+
+// Блок конфигурации плагина application. Содержимое зависит от конкретного плагина
+application {
+    mainClassName = 'com.walking.Main'
+}
